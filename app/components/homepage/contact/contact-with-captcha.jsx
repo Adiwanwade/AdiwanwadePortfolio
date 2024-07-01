@@ -31,7 +31,7 @@ function ContactWithCaptcha() {
       toast.error('Please complete the captcha!');
       return;
     } else {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/google`, {
+      const res = await axios.post(https://adiwanwade-portfolio-nmceipcyr-adiwanwades-projects.vercel.app/api/google, {
         token: captcha
       });
 
