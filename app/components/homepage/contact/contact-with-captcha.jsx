@@ -26,21 +26,28 @@ function ContactWithCaptcha() {
     }
   };
 
-  const handleSendMail = async (e) => {
-    if (!captcha) {
-      toast.error('Please complete the captcha!');
-      return;
-    } else {
-      const res=await axios.post(`$ {process.env.NEXT_PUBLIC_APP_URL}/api/ google`, {
-        token: captcha
-      });
+const handleSendMail = async (e) => {
+  if (!captcha) {
+    toast.error('Please complete the captcha!');
+    return;
+  }
+  
+  try {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/google`, {
+      token: captcha
+    });
 
-      setCaptcha(null);
-      if (!res.data.success) {
-        toast.error('Captcha verification failed!');
-        return;
-      };
-    };
+    setCaptcha(null);
+    
+    if (!res.data.success) {
+      toast.error('Captcha verification failed!');
+      return;
+    }
+  } catch (error) {
+    console.error('Captcha verification error:', error);
+    toast.error('Error verifying captcha');
+  }
+
 
     e.preventDefault();
     if (!input.email || !input.message || !input.name) {
